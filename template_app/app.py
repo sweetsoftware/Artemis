@@ -23,7 +23,9 @@ def form():
         f.write(time.ctime() + '\n')
         for i in TO_LOG:
             if i in request.form:
-                f.write(i + ' = ' + request.form[i] + '\n')
+                log = i + ' = ' + request.form[i]
+                f.write(log + '\n')
+                print log
         f.write('\n')
     return redirect(REDIRECT_URL)
 
