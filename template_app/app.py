@@ -27,7 +27,7 @@ def form():
                 f.write(log + '\n')
                 print log
         f.write('\n')
-    return redirect(REDIRECT_URL)
+    return "<script>window.location='" + REDIRECT_URL + "'</script>"
 
 
 @app.route('/')
