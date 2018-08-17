@@ -121,7 +121,7 @@ def main(args):
     os.makedirs(output_dir + '/templates')
     shutil.move('app.py', output_dir)
     shutil.move('index.html', output_dir + '/templates')
-    shutil.move('template_app/run.sh', output_dir)
+    shutil.copy('template_app/run.sh', output_dir)
     print "[*] Phishing page ready !"
     runnow = raw_input("Run now ? (y/n)")
     if runnow == 'y':
